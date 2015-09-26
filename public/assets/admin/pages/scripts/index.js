@@ -223,22 +223,17 @@ var Index = function () {
                 return (Math.floor(Math.random() * (1 + 50 - 20))) + 10;
             }
 
-            var visitors = [
-                ['02/2013', 1500],
-                ['03/2013', 2500],
-                ['04/2013', 1700],
-                ['05/2013', 800],
-                ['06/2013', 1500],
-                ['07/2013', 2350],
-                ['08/2013', 1500],
-                ['09/2013', 1300],
-                ['10/2013', 4600]
-            ];
-
 	    var visitors = [];
 	    var accounts = eval($("#site_statistics").attr("data-orders"));
+	    var sum=0;
 	    for(var i=0;i<accounts.length;i++)
-	    visitors.push([accounts[i].created_at,accounts[i].balance]);
+	    {
+	     if((i%3)==0)
+	     sum=0;
+	     sum+=accounts[i].balance;
+	     if((i%3)==2)
+	     visitors.push([accounts[i].created_at,sum]);
+	    }
 
             if ($('#site_statistics').size() != 0) {
 
