@@ -1415,12 +1415,20 @@ License: You must have a valid license purchased only from themeforest(the above
 								<span class="caption-helper">weekly stats...</span>
 							</div>
 							<div class="actions">
-								<div class="btn-group btn-group-devided" data-toggle="buttons">
+								<!--div class="btn-group btn-group-devided" data-toggle="buttons">
 									<label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
 									<input type="radio" name="options" class="toggle" id="option1">New</label>
 									<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
 									<input type="radio" name="options" class="toggle" id="option2">Returning</label>
-								</div>
+								</div-->
+								<% filter_type = (params[:filter_type] ? params[:filter_type].to_i : 2) %>
+								
+								<select id="filter_type">
+									<option value=1 <%= (filter_type==1 ? "selected" : "") %>>Last Week</option>
+									<option value=2 <%= (filter_type==2 ? "selected" : "") %>>Last Month</option>
+									<option value=3 <%= (filter_type==3 ? "selected" : "") %>>Last 6 Months</option>
+									<option value=4 <%= (filter_type==4 ? "selected" : "") %>>Last Year</option>
+								</select>
 							</div>
 						</div>
 						<div class="portlet-body">
@@ -1429,7 +1437,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							</div>
               
 							<div id="site_statistics_content" class="display-none">
-                <%= content_tag :div, "", id: "site_statistics", class: "chart", data: {orders: products_chart_data} %>
+                <%= content_tag :div, "", id: "site_statistics", class: "chart", data: {orders: products_chart_data(filter_type)} %>
 								
 							</div>
 						</div>
@@ -4145,6 +4153,13 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {    
+   $("#filter_type").html($("#filter_type").html());
+   $("#filter_type").change(
+    function()
+    {
+     location.href="/charting?filter_type="+$("#filter_type").val();
+    }
+   );
    Metronic.init(); // init metronic core componets
    Layout.init(); // init layout
    QuickSidebar.init(); // init quick sidebar
