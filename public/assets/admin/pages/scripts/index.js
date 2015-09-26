@@ -235,6 +235,10 @@ var Index = function () {
                 ['10/2013', 4600]
             ];
 
+	    var visitors = [];
+	    var accounts = eval($("#site_statistics").attr("data-orders"));
+	    for(var i=0;i<accounts.length;i++)
+	    visitors.push([accounts[i].created_at,accounts[i].balance]);
 
             if ($('#site_statistics').size() != 0) {
 
