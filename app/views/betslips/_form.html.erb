@@ -1,0 +1,31 @@
+
+<div class="row">
+<%= simple_form_for(@betslip, html: { class: 'form-horizontal center' }, defaults: { wrapper_html: { class: 'form-group' }, input_html: { class: 'form-control', :style => "width: 50%"}}) do |f| %>
+
+  <% if @betslip.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@betslip.errors.count, "error") %> prohibited this betslip from being saved:</h2>
+
+      <ul>
+      <% @betslip.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <%= f.input :stake %>
+    <%= f.input :winnings %>
+    <%= f.input :total_odds %>
+    <%= f.input :status %>
+    <h3>Games</h3>
+      <%= f.simple_fields_for :games do |builder| %>
+        <%= render 'game_fields', f: builder %>
+      
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'add games', f, :games %>
+      <%= f.submit %>
+<% end %>
+</div>
+</div>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Betslips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Stake</th>
+      <th>Winnings</th>
+      <th>Total odds</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @betslips.each do |betslip| %>
+      <tr>
+        <td><%= betslip.stake %></td>
+        <td><%= betslip.winnings %></td>
+        <td><%= betslip.total_odds %></td>
+        <td><%= betslip.status %></td>
+        <td><%= link_to 'Show', betslip %></td>
+        <td><%= link_to 'Edit', edit_betslip_path(betslip) %></td>
+        <td><%= link_to 'Destroy', betslip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Betslip', new_betslip_path %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Match:</strong>
+  <%= @game.match %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @game.type_bet %>
+</p>
+
+<p>
+  <strong>Selection:</strong>
+  <%= @game.selection %>
+</p>
+
+<p>
+  <strong>Odds:</strong>
+  <%= @game.odds %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @game.status %>
+</p>
+
+<%= link_to 'Edit', edit_game_path(@game) %> |
+<%= link_to 'Back', games_path %>

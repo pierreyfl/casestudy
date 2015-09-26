@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stake: 1.5
+  winnings: 1.5
+  total_odds: 1.5
+  status: MyString
+
+two:
+  stake: 1.5
+  winnings: 1.5
+  total_odds: 1.5
+  status: MyString
