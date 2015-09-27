@@ -1,12 +1,34 @@
 class Account < ActiveRecord::Base
   belongs_to :user
-
   
-  def self.total_grouped_by_day(start,current_user)
-    balances = where(created_at: start.beginning_of_day..Time.zone.now,user_id: current_user.id)
-    balances = balances.group("date(created_at)")
-    balances = balances.select("created_at, balance as total_balance")
-    balances.group_by {|o| o.created_at.to_date }
+  def self.balance_on_the_date(time, user = nil)
+    user.accounts.where("created_at <= ?", time).order("created_at ASC").pluck(:balance).last || 0
+  end
+
+  def self.include_start_balance_if_need chart, type, user
+    return chart unless type == "days"
+    start_account = user.accounts.first
+    end_of_start_day = start_account.created_at.localtime.end_of_day
+    if chart.map{|c| c.first}.include? end_of_start_day and !chart.include?([end_of_start_day => start_account.balance])
+      chart[start_account.created_at.localtime] = start_account.balance
+    end
+    chart.sort
+  end
+
+  def self.chart(type = "days", user)
+    case type
+    when "days" 
+      dates = Time.checkpoints_for_last 10, "days"
+    when "weeks"
+      dates = Time.checkpoints_for_last 4, "weeks"
+    when "months"
+      dates = Time.checkpoints_for_last 12, "months"
+    when "quarters"
+      dates = Time.checkpoints_for_last 4, "quarters"
+    end
+    chart = {}
+    dates.map{|date| chart[date] = self.balance_on_the_date(date, user)}
+    chart = self.include_start_balance_if_need(chart, type, user)
   end
   
 end
