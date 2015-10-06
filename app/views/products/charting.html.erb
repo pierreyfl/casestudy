@@ -1437,7 +1437,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							</div>
               
 							<div id="site_statistics_content" class="display-none">
-                <%= content_tag :div, "", id: "site_statistics", class: "chart", data: {orders: products_chart_data(filter_type)} %>
+                <%= content_tag :div, "", id: "site_statistics", class: "chart", data: {orders: chart_by(filter_type)} %>
 								
 							</div>
 						</div>
@@ -4153,7 +4153,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {    
-   $("#filter_type").html($("#filter_type").html());
+   ///$("#filter_type").html($("#filter_type").html());
    $("#filter_type").change(
     function()
     {
