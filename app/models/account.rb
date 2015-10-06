@@ -6,7 +6,7 @@ class Account < ActiveRecord::Base
   end
 
   def self.include_start_balance_if_need chart, type, user
-    return chart unless type == "1"
+    return chart unless type == "last_week"
     start_account = user.accounts.first
     end_of_start_day = start_account.created_at.localtime.end_of_day
     if chart.map{|c| c.first}.include? end_of_start_day and !chart.include?([end_of_start_day => start_account.balance])
@@ -15,16 +15,18 @@ class Account < ActiveRecord::Base
     chart.sort
   end
 
-  def self.chart(type = 2, user)
+  def self.chart(type = "weeks", user)
     case type
-    when 1 #days 
-      dates = Time.days_for_last "week"
-    when 2 #weeks
-      dates = Time.days_for_last "month"
-    when 3 #months
-      dates = Time.days_for_last "6 months"
-    when 4 #quarters
-      dates = Time.days_for_last "year"
+    when "last_week"
+      dates = Time.checkpoints_for_last 7, "days"
+    #when "last_month"
+    #  dates = Time.checkpoints_for_last 4, "weeks"
+    when "last_6_months"
+      dates = Time.checkpoints_for_last 6, "months"
+    when "last_year"
+      dates = Time.checkpoints_for_last 4, "quarters"
+    else
+      dates = Time.checkpoints_for_last 4, "weeks"
     end
     chart = {}
     dates.map{|date| chart[date] = self.balance_on_the_date(date, user)}

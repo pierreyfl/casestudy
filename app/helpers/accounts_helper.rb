@@ -1,7 +1,7 @@
 module AccountsHelper
 
   def chart_by(type)
-    type = 2 if type.blank?
+    type = "last_month" if type.blank?
     chart = Account.chart(type, current_user)
     rtn_ary = []
     chart.each do |item|

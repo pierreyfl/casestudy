@@ -1,15 +1,5 @@
 <p id="notice"><%= notice %></p>
 
-<nav class="for_chart">
-  <%= link_to "By days", products_path(by: "days")%>
-  |
-  <%= link_to "By weeks", products_path(by: "weeks")%>
-  |
-  <%= link_to "By months", products_path(by: "months")%>
-  |
-  <%= link_to "By quarters", products_path(by: "quarters")%>
-</nav>
-<%= content_tag :div, "", id: "orders_chart", data: {orders: chart_by(params[:by])} %>
 <div id="annual"></div>
 
 <h1>Listing Products</h1>

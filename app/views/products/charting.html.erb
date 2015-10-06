@@ -1421,13 +1421,13 @@ License: You must have a valid license purchased only from themeforest(the above
 									<label class="btn btn-transparent grey-salsa btn-circle btn-sm">
 									<input type="radio" name="options" class="toggle" id="option2">Returning</label>
 								</div-->
-								<% filter_type = (params[:filter_type] ? params[:filter_type].to_i : 2) %>
 								
+                <% params[:by] = "last_month" unless ["last_week", "last_month", "last_6_months", "last_year"].include?(params[:by]) %>
 								<select id="filter_type">
-									<option value=1 <%= (filter_type==1 ? "selected" : "") %>>Last Week</option>
-									<option value=2 <%= (filter_type==2 ? "selected" : "") %>>Last Month</option>
-									<option value=3 <%= (filter_type==3 ? "selected" : "") %>>Last 6 Months</option>
-									<option value=4 <%= (filter_type==4 ? "selected" : "") %>>Last Year</option>
+									<option value="last_week" <%= (params[:by]=="last_week" ? "selected" : "") %>>Last Week</option>
+									<option value="last_month" <%= (params[:by]=="last_month" ? "selected" : "") %>>Last Month</option>
+									<option value="last_6_months" <%= (params[:by]=="last_6_months" ? "selected" : "") %>>Last 6 Months</option>
+									<option value="last_year" <%= (params[:by]=="last_year" ? "selected" : "") %>>Last Year</option>
 								</select>
 							</div>
 						</div>
@@ -1437,7 +1437,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							</div>
               
 							<div id="site_statistics_content" class="display-none">
-                <%= content_tag :div, "", id: "site_statistics", class: "chart", data: {orders: chart_by(filter_type)} %>
+                <%= content_tag :div, "", id: "site_statistics", class: "chart", data: {orders: chart_by(params[:by])} %>
 								
 							</div>
 						</div>
@@ -4105,6 +4105,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<i class="icon-arrow-up"></i>
 	</div>
 </div>
+<div id="test"></div>
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <!-- BEGIN CORE PLUGINS -->
@@ -4157,9 +4158,13 @@ jQuery(document).ready(function() {
    $("#filter_type").change(
     function()
     {
-     location.href="/charting?filter_type="+$("#filter_type").val();
+     location.href="/charting?by="+$("#filter_type").val();
     }
    );
+   
+   //alert( $('#site_statistics_content .chart').data('orders') );
+   //$.plot( '#test', $('#site_statistics_content .chart').data('orders'));
+
    Metronic.init(); // init metronic core componets
    Layout.init(); // init layout
    QuickSidebar.init(); // init quick sidebar

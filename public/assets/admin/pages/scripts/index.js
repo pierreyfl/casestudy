@@ -226,26 +226,17 @@ var Index = function () {
 	    var visitors = [];
 	    var accounts = eval($("#site_statistics").attr("data-orders"));
 	    var sum=0;
-	    var modular=5;
-	    if($("#filter_type").val()==1)
-	    modular=1
-	    else if($("#filter_type").val()==3)
-	    modular=30;
-	    else if($("#filter_type").val()==4)
-	    modular=60;
 	    for(var i=0;i<accounts.length;i++)
 	    {
-	     if((i%modular)==0)
-	     sum=0;
-	     sum+=accounts[i].balance;
-	     if((i%modular)==modular-1)
-	     visitors.push([accounts[i].created_at,sum]);
+	     visitors.push([accounts[i].created_at,accounts[i].balance]);
 	    }
 
             if ($('#site_statistics').size() != 0) {
 
                 $('#site_statistics_loading').hide();
                 $('#site_statistics_content').show();
+                
+                console.log();
 
                 var plot_statistics = $.plot($("#site_statistics"),
                     [{
